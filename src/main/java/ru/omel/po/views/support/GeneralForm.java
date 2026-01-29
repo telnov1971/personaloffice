@@ -18,11 +18,13 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -34,10 +36,22 @@ import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.internal.Pair;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
+<<<<<<< HEAD
+import com.vaadin.flow.theme.lumo.LumoIcon;
+=======
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.VaadinServletResponse;
+>>>>>>> 55baf4fae62a074b652892288a79e33d7665f5b3
 import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.security.core.context.SecurityContextHolder;
+import com.vaadin.flow.theme.lumo.LumoIcon;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -142,6 +156,11 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
     protected General general = new General();
     protected Binder<General> generalBinder = new Binder<>(General.class);
     protected TextArea period;
+    protected Checkbox needMD;
+    protected HorizontalLayout needBar = new HorizontalLayout();
+    protected Button help = new Button(VaadinIcon.QUESTION.create()); 
+    protected Dialog dialog = new Dialog();
+    protected VerticalLayout dialogLayout;
     protected TextField contract;
     protected TextArea countTransformations;
     protected TextArea countGenerations;
@@ -351,6 +370,15 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
         reservation.setPlaceholder("Величина и обоснование технологической и аварийной брони");
         reservation.setHelperText("(величина и обоснование технологической и аварийной брони)");
         period = new TextArea("Срок подключения по временной схеме");
+        needMD = new Checkbox("Необходима установка прибора учета");
+        //needBar.setClassName("w-full flex-wrap bg-contrast-5 py-s px-l");
+        //needBar.setSpacing(true);
+        //help.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        needBar.add(needMD, help);
+        dialog.getElement().setAttribute("aria-label","Пояснение...");
+        dialogLayout = createDialogLayout(dialog);
+        dialog.add(dialogLayout);
+
         contract = new TextField("Реквизиты договора");
         contract.setHelperText("(реквизиты договора на технологическое присоединение)");
         garantText = new TextField("Наименование гарантирующего поставщика (обязательное) *");
@@ -413,7 +441,7 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
         formDemand.add(countPoints, accordionPoints, powerCurrent, powerDemand
                 , powerMaximum, voltage, voltageIn, safety, label);
         formDemand.add(countTransformations,countGenerations,techminGeneration,reservation);
-        formDemand.add(period,contract);
+        formDemand.add(period, needBar, contract);
         formDemand.add(accordionExpiration);
         formDemand.add(garant, garantText, plan);
         setWidthFormDemand();
@@ -432,7 +460,8 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
                 countPoints, accordionPoints, powerDemand, powerCurrent,
                 powerMaximum, voltage, voltageIn, safety, specification,
                 countTransformations,accordionExpiration,
-                countGenerations, techminGeneration, reservation, plan, period, contract, garantText};
+                countGenerations, techminGeneration, reservation, 
+                plan, period, needBar, contract, garantText};
         for(Component field : fields){
             field.setVisible(false);
         }
@@ -471,6 +500,9 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
     }
 
     protected void setListeners() {
+        help.addClickListener(event -> {
+            dialog.open();
+        });
         save.addClickListener(event -> {
             if(Boolean.TRUE.equals(!verifyField())) return;
             if(!save()) return;
@@ -1276,5 +1308,32 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
     public void setPrivilegeNot(){
         privilegeNot.setValue(false);
     }
-}
 
+    private static VerticalLayout createDialogLayout(Dialog dialog) {
+        H3 headline = new H3("Пояснение");
+        headline.getStyle().set("margin", "var(--lumo-space-m) 0")
+                .set("font-size", "0.7em").set("font-weight", "bold");
+
+        Paragraph paragraph = new Paragraph(
+                "ТОЛЬКО для заявителей, осуществляющих технологическое присоединение энергопринимающих устройств" +
+                "операторов связи, остановок всех видов общественного транспорта (транспорта общего пользования)" +
+                " городского и пригородного сообщения, дорожных камер и камер городского видеонаблюдения, наружной" +
+                " рекламы с использованием щитов, стендов, строительных сеток, перетяжек, электронных табло," +
+                " проекционного и иного предназначенного для проекции рекламы на любые поверхности оборудования," +
+                " светофоров, объектов уличного освещения при условии, что максимальная мощность составляет не" +
+                " более 5 кВт включительно\r\n");
+
+        Button closeButton = new Button("Закрыть");
+        closeButton.addClickListener(e -> dialog.close());
+
+        VerticalLayout dialogLayout = new VerticalLayout(headline, paragraph,
+                closeButton);
+        dialogLayout.setPadding(false);
+        dialogLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
+        dialogLayout.getStyle().set("width", "400px").set("max-width", "100%");
+        dialogLayout.setAlignSelf(FlexComponent.Alignment.END, closeButton);
+
+        return dialogLayout;
+    }
+
+}
