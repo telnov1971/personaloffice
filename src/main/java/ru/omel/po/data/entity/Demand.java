@@ -103,6 +103,9 @@ public class Demand extends AbstractEntity {
     // временный срок
     @Column(name = "period_connection")
     private String period;
+    // временное ТП, нужен прибор учета
+    @Column(name = "need_MD")
+    private boolean needMD = false;
 
     // реквизиты договора
     private String contract;
@@ -258,6 +261,12 @@ public class Demand extends AbstractEntity {
     }
     public void setPeriod(String period) {
         this.period = period;
+    }
+    public boolean isNeedMD() {
+        return needMD;
+    }
+    public void setNeedMD(boolean needMD) {
+        this.needMD = needMD;
     }
     public String getContract() {
         return contract;
