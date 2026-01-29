@@ -1012,7 +1012,7 @@ public abstract class GeneralForm extends Div implements BeforeEnterObserver {
                  , birthdate, birthplace
                  , addressRegistration, addressActual, addressEquals, privilegeNot
                  , reason, object, address, specification
-                 , countPoints, powerDemand, powerCurrent, voltage, safety, period
+                 , countPoints, powerDemand, powerCurrent, voltage, safety, period, needMD
                  , contract, countTransformations, countGenerations
                  , techminGeneration, reservation
                  , plan, garant, garantText
