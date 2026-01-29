@@ -3,14 +3,10 @@ package ru.omel.po.views.support;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.AnchorTarget;
 import com.vaadin.flow.component.notification.NotificationVariant;
-import com.vaadin.flow.component.page.*;
-
 import ru.omel.po.config.AppEnv;
 import ru.omel.po.data.entity.*;
 import ru.omel.po.data.service.*;
 import ru.omel.po.views.demandlist.DemandList;
-import ru.omel.po.views.main.MainView;
-
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.button.Button;
@@ -36,23 +32,12 @@ import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.internal.Pair;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
-<<<<<<< HEAD
-import com.vaadin.flow.theme.lumo.LumoIcon;
-=======
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.server.VaadinServletResponse;
->>>>>>> 55baf4fae62a074b652892288a79e33d7665f5b3
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.vaadin.flow.theme.lumo.LumoIcon;
-
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.text.DecimalFormat;
