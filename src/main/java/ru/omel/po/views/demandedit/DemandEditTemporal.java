@@ -105,6 +105,7 @@ public class DemandEditTemporal extends GeneralForm {
         if(reason.getValue().getId() == 5){
             contract.setVisible(true);
             period.setVisible(false);
+            needBar.setVisible(true);
             this.maxPower = 1000000.0;
             powerMaximum.setHelperText("");
             period.setHelperText("");
@@ -112,6 +113,7 @@ public class DemandEditTemporal extends GeneralForm {
         if(reason.getValue().getId() == 6){
             contract.setVisible(false);
             period.setVisible(true);
+            needBar.setVisible(false);
             this.maxPower = 150.0;
             powerMaximum.setHelperText("Для передвижных объектов максимальная мощность не более 150 кВт");
             period.setHelperText("Для передвижных объектов срок подключения не должен превышать 12 месяцев");
