@@ -92,6 +92,8 @@ public class HistoryService extends CrudService<History,Long> {
         history = history + (!temp.equals("") ? "Рассрочка платежа: " + temp + "\n" : "");
         temp = createHistory(demand.getPeriod(), oldDemand.getPeriod());
         history = history + (!temp.equals("") ? "Временный срок: " + temp + "\n" : "");
+        temp = createHistory(demand.isNeedMD(), oldDemand.isNeedMD());
+        history = history + (!temp.equals("") ? "Нужен ПУ: " + temp + "\n" : "");
         temp = createHistory(demand.getContract(), oldDemand.getContract());
         history = history + (!temp.equals("") ? "Реквизиты договора: " + temp + "\n" : "");
         temp = createHistory(demand.isPrivilegeNot(), oldDemand.isPrivilegeNot());
