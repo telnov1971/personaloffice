@@ -1,3 +1,4 @@
+/*
 package ru.omel.po.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,3 +49,4 @@ public class ModeController {
     }
 
 }
+*/
