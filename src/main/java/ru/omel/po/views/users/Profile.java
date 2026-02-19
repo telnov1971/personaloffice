@@ -262,9 +262,9 @@ public class Profile extends Div implements BeforeEnterObserver {
     }
 
     private void sendMessage(User user){
-        String host = "http://" + VaadinRequest.getCurrent().getHeader("host");
+        final String host = "https://" + VaadinRequest.getCurrent().getHeader("host");
         if (!user.getEmail().isEmpty()) {
-            String message = String.format("""
+            final String message = String.format("""
                     Здравствуйте, %s!
                     Добро пожаловать в Личный кабинет АО Омскэлектро.
                     Пожалуйста перейдите по ссылке: %s/activate/%s
